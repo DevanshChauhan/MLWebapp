@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import uuid
+import os
 
 app = Flask(__name__)
 
@@ -17,6 +18,9 @@ def hello_world():
         text = request.form['text']
         random_string = uuid.uuid4().hex
         path = "app/static/" + random_string + ".svg"
+        files = [f for f in os.listdir('.') if os.path.isfile(f)]
+        for f in files:
+          print(f)
         model = load('app/model.joblib')
         np_arr = floats_string_to_np_arr(text)
         make_picture('app/AgesAndHeights.pkl', model, np_arr, path)
